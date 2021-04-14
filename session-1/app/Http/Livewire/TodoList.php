@@ -25,4 +25,16 @@ class TodoList extends Component
         $this->todoList = Todo::where('user_id', $user->id)->get();
         return view('livewire.todo-list', ['todoList' => $this->todoList]);
     }
+
+    public function deleteTodo(Todo $todo)
+    {
+        if ($todo !== NULL) {
+            $id = $todo->id;
+            if ($todo->delete()) {
+                $this->todoList = array_filter($this->todoList, function ($item) use ($id) {
+                    return $item->id !== $id;
+                });
+            }
+        }
+    }
 }
