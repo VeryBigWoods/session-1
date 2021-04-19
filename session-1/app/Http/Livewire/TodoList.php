@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Todo;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Carbon\Carbon;
 
 class TodoList extends Component
 {
@@ -22,7 +23,11 @@ class TodoList extends Component
     public function render()
     {
         $user = Auth::user();
-        $this->todoList = Todo::where('user_id', $user->id)->get();
+        $due_limit = Carbon::now()->subDays(3);
+        $this->todoList = Todo::where('user_id', $user->id)
+            ->where('due', '>=', $due_limit)
+            ->orderBy('due', 'asc')
+            ->get();
         return view('livewire.todo-list', ['todoList' => $this->todoList]);
     }
 

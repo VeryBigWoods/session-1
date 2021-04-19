@@ -11,6 +11,7 @@ class CreateTodo extends Component
 {
 
     public $name = '';
+    public $due = null;
 
     public function render()
     {
@@ -23,9 +24,16 @@ class CreateTodo extends Component
 
         Todo::create([
             'name' => $this->name,
-            'user_id' => $user->id
-        ]);
+            'user_id' => $user->id,
+            'due' => $this->due
+        ]);        
 
+        $this->resetFields();
         $this->emit('todoSaved');
+    }
+
+    private function resetFields() {
+        $this->name = '';
+        $this->due = null;
     }
 }

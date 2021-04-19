@@ -3,6 +3,7 @@
         <thead>
             <tr>
                 <th class="text-left">Name</th>
+                <th class="text-left">Due</th>
                 <th class="text-right">Action</th>
             </tr>
         </thead>
@@ -10,6 +11,7 @@
             @foreach ($todoList as $todo)
                 <tr>
                     <td>{{ $todo->name }}</td>
+                    <td>{{ $todo->due }}</td>
                     <td class="text-right">
                         <x-jet-button wire:click="deleteTodo({{ $todo->id }})">
                             {{ __('delete') }}
