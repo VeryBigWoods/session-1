@@ -1,4 +1,25 @@
 <div class="mx-auto w-1/2 my-8">
+
+    <x-jet-button wire:click="$set('showCreateModal', true)">
+        {{ __('Create') }}
+    </x-jet-button>
+
+    <x-jet-dialog-modal wire:model="showCreateModal">
+        <x-slot name="title">
+            {{ __('Create TODO Item') }}
+        </x-slot>
+
+        <x-slot name="content">
+            <livewire:create-todo>
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-jet-secondary-button @click="show = false">
+                {{ __('Close') }}
+            </x-jet-secondary-button>
+        </x-slot>
+    </x-jet-dialog-modal>
+
     <table class="table-auto w-full">
         <thead>
             <tr>

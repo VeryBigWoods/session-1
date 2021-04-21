@@ -9,6 +9,7 @@ use Carbon\Carbon;
 
 class TodoList extends Component
 {
+    public $showCreateModal = false;
 
     private $todoList = [];
 
@@ -18,6 +19,7 @@ class TodoList extends Component
     {
         $user = Auth::user();
         $this->todoList = Todo::where('user_id', $user->id)->get();
+        $this->showCreateModal = false;
     }
 
     public function render()
