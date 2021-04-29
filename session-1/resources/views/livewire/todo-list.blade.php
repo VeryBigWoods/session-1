@@ -44,4 +44,6 @@
             @endforeach
         </tbody>
     </table>
+
+    {{ $todoList->links() }}
 </div>
