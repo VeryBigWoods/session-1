@@ -6,9 +6,12 @@ use App\Models\Todo;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Carbon\Carbon;
+use Livewire\WithPagination;
 
 class TodoList extends Component
 {
+    use WithPagination;
+    
     public $showCreateModal = false;
 
     private $todoList;
@@ -63,7 +66,7 @@ class TodoList extends Component
         $this->todoList = Todo::where('user_id', $user->id)
             ->where('due', '>=', $due_limit)
             ->orderBy('due', 'asc')
-            ->get();
+            ->paginate(5);
 
         $this->checkList = $this->todoList->map(function ($item) {
             return [
