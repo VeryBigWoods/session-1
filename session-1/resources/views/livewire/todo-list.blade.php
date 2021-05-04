@@ -1,5 +1,11 @@
 <div class="mx-auto w-1/2 my-8">
 
+    <div class="mb-4 flex">
+        <x-jet-input id="search-input" type="text" class="mr-1 block flex-1" wire:model.defer="searchKeyword"/>
+        <x-jet-button wire:click="onSearch">
+            {{ __('Search') }}
+        </x-jet-button>
+    </div>
     <div class="mb-4">
         <x-jet-button wire:click="$set('showCreateModal', true)">
             {{ __('Create') }}

@@ -11,11 +11,12 @@ use Livewire\WithPagination;
 class TodoList extends Component
 {
     use WithPagination;
-    
+
     public $showCreateModal = false;
 
     private $todoList;
     public $checkList = [];
+    public $searchKeyword = '';
 
     protected $listeners = ['todoSaved' => 'onTodoSaved'];
 
@@ -48,7 +49,7 @@ class TodoList extends Component
 
     public function deleteByChecklist()
     {
-        $checkedItems = array_filter($this->checkList, function($item) {
+        $checkedItems = array_filter($this->checkList, function ($item) {
             return $item['checked'] === true;
         });
         $builder = Todo::query();
@@ -61,10 +62,19 @@ class TodoList extends Component
         }
     }
 
+    public function onSearch()
+    {
+    }
+
     private function loadData($user, $due_limit)
     {
-        $this->todoList = Todo::where('user_id', $user->id)
-            ->where('due', '>=', $due_limit)
+        $query = Todo::where('user_id', $user->id)
+            ->where('due', '>=', $due_limit);
+
+        if (!empty($this->searchKeyword)) {
+            $query->where('name', 'like', '%' . $this->searchKeyword . '%');
+        }
+        $this->todoList = $query
             ->orderBy('due', 'asc')
             ->paginate(5);
 
