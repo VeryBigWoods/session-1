@@ -68,12 +68,15 @@ class TodoList extends Component
 
     private function loadData($user, $due_limit)
     {
-        $query = Todo::where('user_id', $user->id)
-            ->where('due', '>=', $due_limit);
+        $query = null;
 
         if (!empty($this->searchKeyword)) {
-            $query->where('name', 'like', '%' . $this->searchKeyword . '%');
+            $query = Todo::search($this->searchKeyword)->where('user_id', $user->id);
+        } else {
+            $query = Todo::where('user_id', $user->id)
+                ->where('due', '>=', $due_limit);
         }
+
         $this->todoList = $query
             ->orderBy('due', 'asc')
             ->paginate(5);
